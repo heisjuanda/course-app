@@ -1,0 +1,55 @@
+.course-card--container{
+    border: 1px solid green;
+    width: 90%;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 55% 45%;
+    gap: 4%;
+    margin-top: 2%;
+}
+.course-card--container__about-course{
+
+}
+.course-card--container__about-course h1{
+    font-size: clamp(30px,5vw,50px);
+    text-align: start;
+    margin-left: 5%;
+}
+.course-card--container__about-course p{
+    font-size: clamp(15px,1vw,30px);
+    text-align: justify;
+    margin-left: 5%;
+}
+
+.course-card--container__info-course{
+    display: grid;
+    grid-template-columns: 90%;
+    grid-template-rows: 29% 27% 27% 20%;
+    place-items: center;
+}
+.course-card--container__info-course div{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    gap: 0%;
+}
+.course-card--container__info-course div h2{
+    font-size: clamp(20px,1.5vw,35px);
+    text-align: start;
+    border: 1px solid transparent;
+    height: 50%;
+}
+.course-card--container__info-course div p{
+    font-size: clamp(15px,1vw,30px);
+    text-align: start;
+    border: 1px solid transparent;
+    height: 50%;
+    margin-top: 6%;
+}
+.course-card--container__info-course div button{
+    font-size: clamp(15px,1vw,30px);
+    width: 20vw;
+    border: 1px solid violet;
+    background-color: transparent;
+    cursor: pointer;
+}

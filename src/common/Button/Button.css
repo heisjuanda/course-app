@@ -1,0 +1,6 @@
+.button{
+    font-size: clamp(15px,1vw,30px);
+    border: 1px solid violet;
+    background-color: transparent;
+    cursor: pointer;
+}

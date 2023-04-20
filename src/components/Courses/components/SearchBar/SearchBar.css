@@ -1,0 +1,19 @@
+.search-container{
+    /*border: 1px solid red;*/
+    width: 80%;
+    right: 0;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+}
+input{
+    width: 70%;
+    font-size: clamp(15px,1.5vw,25px);
+}
+button{
+    font-size: clamp(15px,1.5vw,25px);
+    border: 1px solid violet;
+    background-color: transparent;
+    cursor: pointer;
+}

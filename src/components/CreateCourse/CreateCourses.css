@@ -1,0 +1,80 @@
+.create-container{
+    width: 80%;
+    margin-inline: auto;
+}
+.inputs input,textarea,input{
+    font-size: clamp(15px,1vw,20px);
+    color: black;
+    border: 1px solid palevioletred;
+}
+h2{
+    font-size: clamp(20px,1.5vw,30px);
+    text-align: center;
+}
+.create-container__header{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1%;
+}
+.header-title{
+    display: grid;
+    grid-template-columns: 70% 30%;
+    gap: 2%;
+}
+.header-title__info{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2%;
+}
+.header-title__info>label{
+    font-size: clamp(15px,1.2vw,20px);
+}
+.header-title__info>input{
+    font-size: clamp(15px,1.2vw,20px);
+    width: 40%;
+    border: 1px solid violet;
+}
+
+.header-content>label{
+    font-size: clamp(15px,1.2vw,20px);
+}
+.header-content>textarea{
+    width: 100%;
+    border: 1px solid yellowgreen;
+    max-width: 100%;
+    min-width: 10%;
+}
+
+.create-container__article{
+    display: flex;
+    flex-direction: column;
+}
+.article-author__information,.article-duration__information{
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    margin-bottom: 2%;
+}
+.article-author__information div:nth-child(1),.article-duration__information div:nth-child(1){
+    width: 65%;
+}
+.article-author__information>input,.article-duration__information>input{
+    width: 100%;
+}
+
+.create-authorBton{
+    margin-top: 2%;
+}
+.create-authorBton button{
+    display: block;
+    margin-inline: auto;
+}
+
+.author-list{
+    display: grid;
+    grid-template-columns: 60% 40%;
+    margin-bottom: 5%;
+}
+.boton-author__add button{
+    font-size: clamp(15px,1.2vw,20px);
+}
