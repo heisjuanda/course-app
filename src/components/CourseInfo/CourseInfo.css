@@ -1,0 +1,46 @@
+h1{
+    text-align: center;
+    font-size: clamp(25px,4vw,40px);
+    margin-bottom: 5%;
+}
+h2{
+    text-align: start;
+    font-size: clamp(15px,1vw,25px);
+}
+p{
+    text-align: start;
+    font-size: clamp(15px,1vw,25px);
+}
+.course-info--container{
+    margin-top: 1%;
+}
+.container__leave{
+    width: 50%;
+}
+.container__leave button{
+    width: 30%;
+    font-size: clamp(15px,1.2vw,25px);
+    border: none;
+}
+.course-info--container__content{
+    width: 90%;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 60% 35%;
+    gap: 5%;
+}
+.course-info--container__content div:first-child{
+    text-align: start;
+    margin-top: 5%;
+}
+.container__content--details>div{
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+}
+.container__content--details div:last-child{
+    display: flex;
+    flex-direction: column;
+}
+.details-authors{
+}

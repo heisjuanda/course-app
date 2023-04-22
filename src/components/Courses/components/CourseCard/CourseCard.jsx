@@ -5,6 +5,7 @@ import Boton from '../../../../common/Button/Button';
 import styles from './CourseCard.css';
 
 const CourseCard = ({
+	id,
 	name,
 	description,
 	authors,
@@ -32,7 +33,10 @@ const CourseCard = ({
 					<p>{created}</p>
 				</div>
 				<div>
-					<Boton text={text} />
+					<Boton
+						text={text}
+						linkTo={`/courses/info/${name}/${id}/${description}/${created}/${authors}/${duration}`}
+					/>
 				</div>
 			</div>
 		</div>

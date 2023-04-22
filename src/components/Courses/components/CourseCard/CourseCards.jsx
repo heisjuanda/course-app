@@ -1,4 +1,5 @@
 import CourseCard from './CourseCard';
+
 import getAuthors from '../../../../helper/authorByTtitle';
 import getHours from '../../../../helper/getHours';
 
@@ -11,6 +12,7 @@ const CourseCards = ({ courses }) => {
 					return (
 						<CourseCard
 							key={co.id}
+							id={co.id}
 							name={co.title}
 							description={co.description}
 							authors={autor}

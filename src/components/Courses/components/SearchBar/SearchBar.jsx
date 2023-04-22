@@ -1,10 +1,8 @@
 import Boton from '../../../../common/Button/Button';
+import Input from '../../../../common/Input/Input';
 
 import isEmpty from '../../../../helper/isEmpty';
-
 import { addingCourse, setAddingCourse } from '../../../../constants';
-
-import Input from '../../../../common/Input/Input';
 
 //styles
 import styles from './SearchBar.css';
@@ -38,6 +36,7 @@ const SearchBar = ({ searcher, idBton, foundedElements, createCourse }) => {
 						createCourse();
 						setAddingCourse(!addingCourse);
 					}}
+					linkTo={'/courses/add'}
 				/>
 			) : null}
 		</div>

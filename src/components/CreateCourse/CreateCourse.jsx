@@ -1,21 +1,18 @@
+import { useState } from 'react';
+
 import Boton from '../../common/Button/Button';
-
-import { mockedAuthorsList, updateMoked } from '../../constants';
-
 import Input from '../../common/Input/Input';
-
-import getDate from '../../helper/getDate';
-
 import Paragraph from '../../common/Paragraph/Paragraph';
 
-import { useState } from 'react';
+import getDate from '../../helper/getDate';
+import { mockedAuthorsList, updateMoked } from '../../constants';
 
 import { v4 as uuidv4 } from 'uuid';
 
 //styles
 import styles from './CreateCourses.css';
 
-const CreateCourse = (end) => {
+const CreateCourse = (/**end */) => {
 	//Course object
 	const [newCourse, setNewCourse] = useState({});
 	const [duration, setDuration] = useState(0);
@@ -78,7 +75,6 @@ const CreateCourse = (end) => {
 	};
 
 	const setNewAuthorArray = () => {
-		//mockedAuthorsList = [...mockedAuthorsList, ...addNewAuthors];
 		for (let author of addNewAuthors) {
 			mockedAuthorsList.push(author);
 		}
@@ -92,10 +88,9 @@ const CreateCourse = (end) => {
 		newCourse.duration = duration;
 		newCourse.authors = setNewAuthorCourse();
 		updateMoked.push(newCourse);
-		console.log(updateMoked);
-		console.log(newCourse);
+		//console.log(updateMoked);
+		//console.log(newCourse);
 		setNewAuthorArray();
-		end.isAddingCourse(false);
 	};
 
 	return (
@@ -118,7 +113,11 @@ const CreateCourse = (end) => {
 					<div>
 						{handleCreateCourse() ? (
 							<>
-								<Boton text={'Create course'} onClick={terminar} />
+								<Boton
+									text={'Create course'}
+									onClick={terminar}
+									linkTo={'/courses'}
+								/>
 							</>
 						) : (
 							<>
@@ -224,6 +223,9 @@ const CreateCourse = (end) => {
 					</div>
 				</div>
 			</article>
+			<center>
+				<Boton linkTo={'/courses'} text={'Cancel'} />
+			</center>
 		</div>
 	);
 	/*return finishCreation ? (
