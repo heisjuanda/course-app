@@ -61,8 +61,8 @@ const CourseCard = ({
 						/>
 					</div>
 					<div>
-						<Boton text={'E'} />
-						<Boton text={'D'} onClick={handleDeleteCourse} />
+						<Boton text={'🖊'} />
+						<Boton text={'🗑'} onClick={handleDeleteCourse} />
 					</div>
 				</div>
 			</div>

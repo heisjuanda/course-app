@@ -61,6 +61,7 @@
 .buttons div:nth-child(2) button{
     margin-left: 70%;
     width: 70px;
+    font-size: clamp(15px,2vw,30px);
 }
 .buttons div{
     width: auto;
