@@ -1,19 +1,31 @@
 .search-container{
-    /*border: 1px solid red;*/
     width: 80%;
     right: 0;
     margin-inline: auto;
     display: flex;
     flex-direction: row;
     gap: 5%;
+    margin-bottom: 4%;
 }
-input{
+.search-container input{
     width: 70%;
+    border: none;
     font-size: clamp(15px,1.5vw,25px);
+    opacity: 0.7;
+    border-radius: 0.5vw;
+    box-shadow: 0.3vw 0.3vw 0.1vw rgba(0, 0, 0, 0.2);
 }
-button{
+.search-container button{
     font-size: clamp(15px,1.5vw,25px);
-    border: 1px solid violet;
+    border: 2px solid transparent;
+    width: 17%;
     background-color: transparent;
+    border-radius: 1vw;
+    color: lightskyblue;
     cursor: pointer;
+    box-shadow: 0.3vw 0.3vw 0 rgba(173, 216, 230, 0.279);
+}
+.search-container button:active{
+    transform: translate(0.2vw,0.2vw);
+    box-shadow: 0.1vw 0.1vw 0 rgba(173, 216, 230, 0.779);
 }

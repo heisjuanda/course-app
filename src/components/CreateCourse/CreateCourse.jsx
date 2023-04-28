@@ -1,18 +1,26 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Boton from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import Paragraph from '../../common/Paragraph/Paragraph';
 
 import getDate from '../../helper/getDate';
-import { mockedAuthorsList, updateMoked } from '../../constants';
+import { mockedAuthorsList, mockedCoursesList, setFrom } from '../../constants';
 
 import { v4 as uuidv4 } from 'uuid';
+
+import store from '../../store/services';
+//courses
+import * as coursesCreator from '../../store/courses/actionCreators';
+//authors
+import * as authorsCreator from '../../store/authors/actionCreators';
 
 //styles
 import styles from './CreateCourses.css';
 
-const CreateCourse = (/**end */) => {
+const CreateCourse = () => {
+	const Dispatch = useDispatch();
 	//Course object
 	const [newCourse, setNewCourse] = useState({});
 	const [duration, setDuration] = useState(0);
@@ -46,7 +54,12 @@ const CreateCourse = (/**end */) => {
 	//list add new author
 	const [addNewAuthors, setAddNewAuthors] = useState([]);
 	const authorCreator = (authorName) => {
-		const author = { id: uuidv4(), name: authorName };
+		let identifier = uuidv4();
+		//identifier = setIds(mockedAuthorsList, identifier);
+		const author = {
+			id: identifier,
+			name: authorName,
+		};
 		setAddNewAuthors([...addNewAuthors, author]);
 		return author;
 	};
@@ -74,23 +87,39 @@ const CreateCourse = (/**end */) => {
 		return authorID;
 	};
 
-	const setNewAuthorArray = () => {
-		for (let author of addNewAuthors) {
-			mockedAuthorsList.push(author);
+	const setIds = (arr, id) => {
+		if (arr.length > 0) {
+			arr.forEach((el) => {
+				while (el.id === id) {
+					id = uuidv4();
+				}
+			});
 		}
+		return id;
 	};
 
 	const terminar = () => {
-		newCourse.id = `${uuidv4()}`;
-		newCourse.title = newTitle;
-		newCourse.description = newDescription;
-		newCourse.creationDate = getDate();
-		newCourse.duration = duration;
 		newCourse.authors = setNewAuthorCourse();
-		updateMoked.push(newCourse);
-		//console.log(updateMoked);
-		//console.log(newCourse);
+		newCourse.creationDate = getDate();
+		newCourse.description = newDescription;
+		newCourse.duration = duration;
+		let id = uuidv4();
+		newCourse.id = `${setIds(mockedCoursesList, id)}`;
+		newCourse.title = newTitle;
+		/*
+		mockedCoursesList.push(newCourse);
 		setNewAuthorArray();
+		//console.log('addnewAuthors', addNewAuthors);
+		//console.log('newCourse', newCourse);
+		//Dispatch(coursesCreator.saveCourse([newCourse]));
+		*/
+		store.dispatch(coursesCreator.saveCourse([newCourse]));
+		if (addNewAuthors.length > 0) {
+			store.dispatch(authorsCreator.saveAuthor(addNewAuthors));
+		}
+		setFrom(true);
+		console.log('create course');
+		console.log(store.getState());
 	};
 
 	return (

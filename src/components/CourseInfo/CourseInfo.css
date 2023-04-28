@@ -1,26 +1,46 @@
-h1{
+.course-info--container h1{
     text-align: center;
     font-size: clamp(25px,4vw,40px);
     margin-bottom: 5%;
+    color: lightskyblue;
 }
-h2{
+.course-info--container h2{
     text-align: start;
     font-size: clamp(15px,1vw,25px);
+    color: lightskyblue;
 }
 p{
     text-align: start;
     font-size: clamp(15px,1vw,25px);
+    font-family: 'Roboto', sans-serif;
 }
 .course-info--container{
-    margin-top: 1%;
+    margin-top: 7%;
+    border: 5px solid transparent;
+    border-radius: 2vw;
+    width: 95%;
+    margin-inline: auto;
+    padding: 1%;
+    box-shadow: 1vw 1vw 2vw rgba(173, 216, 230, 0.479);
 }
 .container__leave{
     width: 50%;
+    margin-top: 2%;
+    margin-left: 2%;
 }
 .container__leave button{
     width: 30%;
     font-size: clamp(15px,1.2vw,25px);
-    border: none;
+    border: 2px solid transparent;
+    border-radius: 1vw;
+    background-color: transparent;
+    color: lightskyblue;
+    cursor: pointer;
+    box-shadow: 0.3vw 0.3vw 0.2vw rgba(173, 216, 230, 0.479);
+}
+.container__leave button:active{
+    transform: translate(0.2vw,0.2vw);
+    box-shadow: 0.1vw 0.1vw 0 rgba(173, 216, 230, 0.479);
 }
 .course-info--container__content{
     width: 90%;

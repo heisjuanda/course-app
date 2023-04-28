@@ -3,7 +3,7 @@ import CourseCard from './CourseCard';
 import getAuthors from '../../../../helper/authorByTtitle';
 import getHours from '../../../../helper/getHours';
 
-const CourseCards = ({ courses }) => {
+const CourseCards = ({ courses, update, cursos }) => {
 	return (
 		<>
 			{courses.map((co) => {
@@ -19,6 +19,8 @@ const CourseCards = ({ courses }) => {
 							duration={getHours(co)}
 							created={co.creationDate.split('/').join('.')}
 							text={'View Course'}
+							update={update}
+							cursos={cursos}
 						/>
 					);
 				}

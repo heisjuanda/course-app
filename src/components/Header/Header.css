@@ -1,10 +1,15 @@
 .header-section{
-    /*border: 1px solid red;*/
+    border: 1px solid transparent;
+    border-radius: 2vw;
+    /*box-shadow: 0.3vw 0.3vw 0vw rgba(0, 0, 0, 0.1);*/
     width: 100%;
     height: auto;
-    margin-top: 0.3%;
     display: grid;
     grid-template-columns: 80% 10% 10%;
+    margin-bottom: 3%;
+    margin-top: 0.3%;
+    width: 95%;
+    margin-inline: auto;
 }
 .header-section__logo img{
     width: 30vw;
@@ -18,15 +23,21 @@
     place-items: center;
 }
 .header-section__name p{
-    font-size: clamp(15px,1.5vw,30px);
+    font-size: clamp(15px,1.3vw,30px);
     text-align: center;
+    font-family: 'Roboto', sans-serif;
     color: black;
 }
 .header-section__logUser button{
-    border: 1px solid black;
-    background-color: black;
-    color: white;
+    border: 2px solid transparent;
+    background-color: transparent;
+    color: lightskyblue;
     font-size: clamp(15px,1.5vw,30px);
-    border-radius: 7px;
+    box-shadow: 0.3vw 0.3vw 0vw rgba(173, 216, 230, 0.396);
+    border-radius: 0.5vw;
     cursor: pointer; 
+}
+.header-section__logUser button:active{
+    transform: translate(0.2vw,0.2vw);
+    box-shadow: 0.1vw 0.1vw 0.1vw rgba(0, 0, 0, 0.13);
 }

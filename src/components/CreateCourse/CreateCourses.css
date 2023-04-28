@@ -2,14 +2,27 @@
     width: 80%;
     margin-inline: auto;
 }
-.inputs input,textarea,input{
-    font-size: clamp(15px,1vw,20px);
-    color: black;
-    border: 1px solid palevioletred;
+.create-container input,textarea{
+    border: none;
+    opacity: 0.7;
+    box-shadow: 0.3vw 0.3vw 0.1vw rgba(0, 0, 0, 0.2);
+    font-size: clamp(15px,1.2vw,20px);
+    border-radius: 0.5vw;
+    min-height: 30px;
 }
-h2{
+.create-container label{
+    color: rgb(121, 153, 190);
+    font-size: clamp(15px,1.3vw,25px);
+}
+.create-container h2{
     font-size: clamp(20px,1.5vw,30px);
     text-align: center;
+    color: lightslategrey;
+}
+.create-container h3{
+    font-size: clamp(18px,1vw,20px);
+    text-align: center;
+    color: rgb(78, 159, 185);
 }
 .create-container__header{
     display: flex;
@@ -26,22 +39,13 @@ h2{
     flex-direction: column;
     margin-bottom: 2%;
 }
-.header-title__info>label{
-    font-size: clamp(15px,1.2vw,20px);
-}
-.header-title__info>input{
-    font-size: clamp(15px,1.2vw,20px);
+.header-title__info input{
     width: 40%;
-    border: 1px solid violet;
 }
-
-.header-content>label{
-    font-size: clamp(15px,1.2vw,20px);
-}
-.header-content>textarea{
+.header-content textarea{
     width: 100%;
-    border: 1px solid yellowgreen;
     max-width: 100%;
+    max-height: 100px;
     min-width: 10%;
 }
 
@@ -77,4 +81,23 @@ h2{
 }
 .boton-author__add button{
     font-size: clamp(15px,1.2vw,20px);
+}
+.create-container button{
+    border: 5px solid transparent;
+    border-radius: 1vw;
+    background-color: transparent;
+    color: lightskyblue;
+    font-size: clamp(15px,1.25vw,25px);
+    cursor: pointer;
+    box-shadow: 0.3vw 0.3vw 0vw rgb(229, 240, 250);
+}
+
+.create-container button:active{
+    transform: translate(0.2vw,0.2vw);
+    box-shadow: 0.1vw 0.1vw 0vw rgb(229, 240, 250);
+}
+
+center button{
+    width: 200px;
+    margin-bottom: 2%;
 }

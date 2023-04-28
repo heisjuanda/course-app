@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Input from '../../common/Input/Input';
 import Boton from '../../common/Button/Button';
@@ -6,10 +7,14 @@ import Paragraph from '../../common/Paragraph/Paragraph';
 
 import { addToken } from '../../LocalStorage/localStorage';
 
+import store from '../../store/services';
+//user
+import * as userCreator from '../../store/user/actionCreators';
 //styles
 import styles from './Login.css';
 
 const Login = () => {
+	const Dispatch = useDispatch();
 	const history = useNavigate();
 	async function handleLogin() {
 		const name = '';
@@ -34,6 +39,14 @@ const Login = () => {
 		} else {
 			alert(`Welcome ${result.user.name}!!`);
 			addToken(result.result, result.user.name);
+			const user = {
+				isAuth: true,
+				name: result.user.name,
+				email: result.user.email,
+				token: result.result,
+			};
+			store.dispatch(userCreator.loginSuccess(user));
+			//Dispatch(userCreator.loginSuccess(user));
 			return true;
 		}
 	}

@@ -1,24 +1,28 @@
 .course-card--container{
-    border: 1px solid green;
+    border: none;
+    border-radius: 1vw;
+    box-shadow: 0.6vw 0.6vw 1vw rgba(173, 216, 230, 0.77);
     width: 90%;
     margin-inline: auto;
+    background-color: lightskyblue;
     display: grid;
     grid-template-columns: 55% 45%;
     gap: 4%;
     margin-top: 2%;
-}
-.course-card--container__about-course{
-
+    padding: 2%;
+    margin-bottom: 2%;
 }
 .course-card--container__about-course h1{
     font-size: clamp(30px,5vw,50px);
     text-align: start;
     margin-left: 5%;
+    color: white;
 }
 .course-card--container__about-course p{
     font-size: clamp(15px,1vw,30px);
     text-align: justify;
     margin-left: 5%;
+    color: linen;
 }
 
 .course-card--container__info-course{
@@ -38,6 +42,7 @@
     text-align: start;
     border: 1px solid transparent;
     height: 50%;
+    color: white;
 }
 .course-card--container__info-course div p{
     font-size: clamp(15px,1vw,30px);
@@ -45,11 +50,32 @@
     border: 1px solid transparent;
     height: 50%;
     margin-top: 6%;
+    color: linen;
 }
-.course-card--container__info-course div button{
+.buttons div:nth-child(1) button{
+    width: 100px;
+}
+.buttons div:nth-child(2){
+    width: 60%;
+}
+.buttons div:nth-child(2) button{
+    margin-left: 70%;
+    width: 70px;
+}
+.buttons div{
+    width: auto;
+}
+.buttons div button{
+    width: auto;
     font-size: clamp(15px,1vw,30px);
-    width: 20vw;
-    border: 1px solid violet;
-    background-color: transparent;
+    border: none;
+    border-radius: 0.7vw;
+    background-color: white;
+    box-shadow: 0.3vw 0.3vw 0 rgba(173, 216, 230, 0.779);
+    color: deepskyblue;
     cursor: pointer;
+}
+.buttons div button:active{
+    transform: translate(0.2vw,0.2vw);
+    box-shadow: 0.1vw 0.1vw 0 rgba(173, 216, 230, 0.779);
 }
