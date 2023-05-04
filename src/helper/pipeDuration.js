@@ -9,4 +9,13 @@ function setHours(num) {
 	}
 }
 
-export default setHours;
+const getHours = (hours) => {
+	let [hour, minutes] = hours.split(':');
+	if (hour < 1) {
+		return parseFloat(minutes);
+	}
+	let r = parseFloat(hour * 60) + parseFloat(minutes);
+	return r;
+};
+
+export { getHours, setHours };

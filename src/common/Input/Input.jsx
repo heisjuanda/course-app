@@ -1,12 +1,12 @@
-const Input = ({ placeHold, i, typ, value, onChange }) => {
+const Input = ({ placeHold, id, type, value, onChange, required }) => {
 	return (
 		<input
 			placeholder={placeHold}
-			id={i}
-			type={typ}
+			id={id}
+			type={type}
 			value={value}
 			onChange={onChange}
-			required
+			required={required}
 		/>
 	);
 };

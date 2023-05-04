@@ -1,32 +1,33 @@
-import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 //components
 import Boton from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import Paragraph from '../../common/Paragraph/Paragraph';
 
-//constants and helpers
-import { mockedAuthorsList, setFrom } from '../../constants';
+//hepers and constants
+import { getHours } from '../../helper/pipeDuration';
+import { mockedAuthorsList } from '../../constants';
 
-//thunk
-import { saveCourses } from '../../store/courses/thunk';
+//thunks
+import { updateCourseID } from '../../store/courses/thunk';
 import { addAuthor } from '../../store/authors/thunk';
 
-//styles
-import styles from './CreateCourses.css';
-
-const CreateCourse = () => {
+const EditCourse = () => {
+	//getting the course object
+	const course = useParams();
+	//List authors from the course
+	const [currentAuthor, setCurrentAuthor] = useState(course.authors.split(','));
+	//List of all authors
+	const [courseAuthors, setCourseAuthors] = useState(mockedAuthorsList);
 	//Course object
 	const [newCourse] = useState({});
-	const [duration, setDuration] = useState(0);
-	const [newTitle, setTitle] = useState('');
-	//authors for this course
-	const [currentAuthor, setCurrentAuthor] = useState([]);
-	const [newDescription, setDescription] = useState('');
-	//all authors
-	const [courseAuthors, setCourseAuthors] = useState(mockedAuthorsList);
+	const [newDuration, setDuration] = useState(getHours(course.duration));
+	const [newTitle, setTitle] = useState(course.title);
+	const [newDescription, setDescription] = useState(course.description);
 
-	//set the global author to the new course
+	//deletes an author from course to add them into all author list
 	const deleteOldAuthor = (authorId) => {
 		currentAuthor.push(courseAuthors.find((author) => author.id === authorId));
 		setCourseAuthors(
@@ -38,7 +39,7 @@ const CreateCourse = () => {
 		);
 	};
 
-	//set the current author to the global list of authors
+	//from global authors to course authors
 	const deleteNewAuthor = (authorId) => {
 		courseAuthors.push(currentAuthor.find((author) => author.id === authorId));
 		setCurrentAuthor(
@@ -86,12 +87,12 @@ const CreateCourse = () => {
 		}
 	};
 
-	const handleCreateCourse = () => {
+	const handleUpdateCourse = () => {
 		if (
 			newTitle.length > 0 &&
 			newDescription.length >= 2 &&
 			currentAuthor.length > 0 &&
-			duration > 0
+			newDuration > 0
 		) {
 			return true;
 		} else {
@@ -107,13 +108,57 @@ const CreateCourse = () => {
 		return authorID;
 	};
 
-	const finishCreation = async () => {
+	function update() {
+		let authorsIDs = currentAuthor.map((author) => {
+			return author.id;
+		});
+		course.title = newTitle;
+		course.duration = newDuration;
+		course.description = newDescription;
+		course.authors = authorsIDs;
+	}
+
+	const finishEdit = async () => {
 		newCourse.authors = setNewAuthorCourse();
 		newCourse.description = newDescription;
-		newCourse.duration = duration;
+		newCourse.duration = newDuration;
 		newCourse.title = newTitle;
-		await saveCourses(newCourse);
+		await updateCourseID(course.id, newCourse);
+		update();
 	};
+
+	//removes authors associated with the current course from the global list
+	useEffect(() => {
+		const checkAuthors = () => {
+			let currentAuthors = course.authors.split(',');
+			let result = courseAuthors;
+			currentAuthors.forEach((id) => {
+				result = result.filter((el) => {
+					return id !== el.id;
+				});
+			});
+			setCourseAuthors(result);
+		};
+		const checkAuthorCurrent = () => {
+			let authors = [];
+			currentAuthor.forEach((id) => {
+				const author = {};
+				mockedAuthorsList.forEach((el) => {
+					if (id === el.id) {
+						author.id = el.id;
+						author.name = el.name;
+						return;
+					}
+				});
+				if (author.id) {
+					authors.push(author);
+				}
+			});
+			setCurrentAuthor(authors);
+		};
+		checkAuthors();
+		checkAuthorCurrent();
+	}, []);
 
 	return (
 		<div className='create-container'>
@@ -125,7 +170,8 @@ const CreateCourse = () => {
 							<Input
 								id={'title'}
 								type='text'
-								placeHold={'Enter title'}
+								placeHold={course.title}
+								value={newTitle}
 								onChange={(e) => {
 									setTitle(e.target.value);
 								}}
@@ -134,18 +180,18 @@ const CreateCourse = () => {
 						</div>
 					</div>
 					<div>
-						{handleCreateCourse() ? (
+						{handleUpdateCourse() ? (
 							<>
 								<Boton
-									text={'Create course'}
-									onClick={finishCreation}
+									text={'Update Course'}
+									onClick={finishEdit}
 									linkTo={'/courses'}
 								/>
 							</>
 						) : (
 							<>
 								<Boton
-									text={'Create course'}
+									text={'Update Course'}
 									onClick={() => {
 										if (newTitle.length <= 0) {
 											alert('There must be a title');
@@ -156,7 +202,7 @@ const CreateCourse = () => {
 										if (currentAuthor.length === 0) {
 											alert('An author is required');
 										}
-										if (duration === 0) {
+										if (newDuration === 0) {
 											alert('Duration has to be more than zero');
 										}
 									}}
@@ -168,14 +214,16 @@ const CreateCourse = () => {
 				<div className='header-content'>
 					<label htmlFor='description'>Description</label>
 					<textarea
-						placeholder='Enter description'
+						placeholder={course.description}
 						name='description'
 						id='description'
 						required
 						onChange={(e) => {
 							setDescription(e.target.value);
 						}}
-					></textarea>
+					>
+						{newDescription}
+					</textarea>
 				</div>
 			</header>
 			<article className='create-container__article'>
@@ -227,15 +275,16 @@ const CreateCourse = () => {
 						<div className='inputs'>
 							<Input
 								id={'duration'}
-								type='number'
-								placeHold={'Add duration'}
+								type={'number'}
+								placeHold={course.duration}
+								value={newDuration}
 								onChange={(e) => {
 									setDuration(parseInt(e.target.value));
 								}}
 								required={true}
 							/>
 						</div>
-						<Paragraph text={`Duration`} id={duration} textb={'hours'} />
+						<Paragraph text={`Duration`} id={newDuration} textb={'hours'} />
 					</div>
 					<div>
 						<h2>Course authors</h2>
@@ -266,4 +315,4 @@ const CreateCourse = () => {
 	);
 };
 
-export default CreateCourse;
+export default EditCourse;

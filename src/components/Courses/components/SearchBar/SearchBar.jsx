@@ -1,19 +1,23 @@
+//components
 import Boton from '../../../../common/Button/Button';
 import Input from '../../../../common/Input/Input';
 
-import isEmpty from '../../../../helper/isEmpty';
+//constants and helper files
 import { addingCourse, setAddingCourse } from '../../../../constants';
+
+//store
+import store from '../../../../store/services';
 
 //styles
 import styles from './SearchBar.css';
 
-const SearchBar = ({ searcher, idBton, foundedElements, createCourse }) => {
+const SearchBar = ({ searcher, idBton, createCourse }) => {
 	return (
 		<div className='search-container'>
 			<label htmlFor='search'></label>
 			<Input
-				i={'search'}
-				typ='text'
+				id={'search'}
+				type='text'
 				placeHold={'Enter course name...'}
 				onChange={(e) => {
 					if (e.target.value.length === 0) {
@@ -28,7 +32,7 @@ const SearchBar = ({ searcher, idBton, foundedElements, createCourse }) => {
 					searcher(document.getElementById('search').value);
 				}}
 			/>
-			{isEmpty(foundedElements) ? (
+			{store.getState().user.role === 'admin' ? (
 				<Boton
 					text={'Add course'}
 					key={'addCourse'}

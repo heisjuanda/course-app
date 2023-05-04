@@ -1,6 +1,6 @@
-function getHours(obj) {
-	if (obj) {
-		let [hour, minutes] = (obj.duration / 60 + '').split('.');
+function getHours(course) {
+	if (course) {
+		let [hour, minutes] = (course.duration / 60 + '').split('.');
 		let minu = Math.round(parseFloat('0.' + minutes) * 60) / 10;
 		let [mins, sec] = (minu + '').split('.');
 		if (sec) {

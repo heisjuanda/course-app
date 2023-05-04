@@ -15,6 +15,6 @@ export function getAuthors(authors) {
 
 export function deleteAll() {
 	return {
-		type: 'DELETE_ALL',
+		type: actionTypes.DELETE_ALL,
 	};
 }

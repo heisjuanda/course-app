@@ -1,14 +1,33 @@
 import { useNavigate } from 'react-router-dom';
 
+//components
 import Input from '../../common/Input/Input';
 import Boton from '../../common/Button/Button';
 import Paragraph from '../../common/Paragraph/Paragraph';
+
+//store thunks
+import { register } from '../../store/user/thunk';
 
 //styles
 import styles from './Registration.css';
 
 const Registration = () => {
 	const history = useNavigate();
+
+	const handleErrors = (result) => {
+		if (result.errors) {
+			if (result.errors[0].includes('password')) {
+				alert('The password length must be longer than 6 digits');
+			} else if (result.errors[0].includes('name')) {
+				alert('The name field is required');
+			} else {
+				alert('The email is invalid or already exist');
+			}
+		} else {
+			alert('Wrong password or email');
+		}
+	};
+
 	async function handleRegistratiion() {
 		const name = document.getElementById('name').value;
 		const password = document.getElementById('password').value;
@@ -18,22 +37,16 @@ const Registration = () => {
 			email: email,
 			password: password,
 		};
-		const response = await fetch('http://localhost:4000/register', {
-			method: 'POST',
-			body: JSON.stringify(newUser),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-		const result = await response.json();
+		const result = await register(newUser);
 		if (!result.successful) {
-			alert(result.errors[0]);
+			handleErrors(result);
 			return false;
 		} else {
 			alert(result.result);
 			return true;
 		}
 	}
+
 	return (
 		<div className='registration-container'>
 			<form className='registration-container__form'>
@@ -42,15 +55,30 @@ const Registration = () => {
 				</div>
 				<div>
 					<label htmlFor='name'>Name</label> <br />
-					<Input typ={'text'} i={'name'} placeHold={'Enter name'} />
+					<Input
+						type={'text'}
+						id={'name'}
+						placeHold={'Enter name'}
+						required={true}
+					/>
 				</div>
 				<div>
 					<label htmlFor='email'>Email</label> <br />
-					<Input typ={'email'} i={'email'} placeHold={'Enter email'} />
+					<Input
+						type={'email'}
+						id={'email'}
+						placeHold={'Enter email'}
+						required={true}
+					/>
 				</div>
 				<div>
 					<label htmlFor='passwork'>Password</label> <br />
-					<Input typ={'password'} i={'password'} placeHold={'Enter name'} />
+					<Input
+						type={'password'}
+						id={'password'}
+						placeHold={'Enter name'}
+						required={true}
+					/>
 				</div>
 				<Boton
 					text={'Registration'}

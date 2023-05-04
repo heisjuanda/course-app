@@ -1,15 +1,15 @@
-//import React, { useRef } from 'react';
-//import information from '../../../../constants';
+//components
 import Boton from '../../../../common/Button/Button';
 
+//store
 import store from '../../../../store/services';
-//course
-import * as courseCreator from '../../../../store/courses/actionCreators';
+//thunks
+import { deleteCourses } from '../../../../store/courses/thunk';
 
+//constants and helper files
 import {
 	deleteMockedCourseList,
 	mockedCoursesList,
-	UpdateMockedCoursesList,
 } from '../../../../constants';
 
 //styles
@@ -20,6 +20,7 @@ const CourseCard = ({
 	name,
 	description,
 	authors,
+	authorsID,
 	duration,
 	created,
 	text,
@@ -27,11 +28,10 @@ const CourseCard = ({
 	cursos,
 }) => {
 	const handleDeleteCourse = () => {
-		store.dispatch(courseCreator.deleteCourse(id));
+		deleteCourses(id);
 		deleteMockedCourseList(id);
+		//updates the course list when it changes
 		cursos(mockedCoursesList);
-		console.log('deleting course');
-		console.log(store.getState());
 		update((v) => v - 1);
 	};
 	return (
@@ -60,10 +60,15 @@ const CourseCard = ({
 							linkTo={`/courses/info/${name}/${id}/${description}/${created}/${authors}/${duration}`}
 						/>
 					</div>
-					<div>
-						<Boton text={'🖊'} />
-						<Boton text={'🗑'} onClick={handleDeleteCourse} />
-					</div>
+					{store.getState().user.role === 'admin' ? (
+						<div>
+							<Boton
+								text={'🖊'}
+								linkTo={`/courses/edit/${name}/${id}/${description}/${created}/${authorsID}/${duration}`}
+							/>
+							<Boton text={'🗑'} onClick={handleDeleteCourse} />
+						</div>
+					) : null}
 				</div>
 			</div>
 		</div>

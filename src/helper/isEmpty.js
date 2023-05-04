@@ -1,10 +1,10 @@
 function isEmpty(arr) {
-	let r = true;
+	let result = true;
 	for (let el of arr) {
 		if (el) {
-			r = false;
+			result = false;
 		}
 	}
-	return r;
+	return result;
 }
 export default isEmpty;

@@ -1,22 +1,22 @@
 //components
 import Header from '../../components/Header/Header';
-import CreateCourse from '../../components/CreateCourse/CreateCourse';
+import EditCourse from '../../components/EditCourse/EditCourse';
 
 //store
 import store from '../../store/services';
 
-const CreateCourses = () => {
+const EditCourses = () => {
 	const authorized = store.getState().user.role === 'admin';
 	return (
 		<>
 			{authorized ? (
 				<>
 					<Header show={true} />
-					<CreateCourse />
+					<EditCourse />
 				</>
 			) : null}
 		</>
 	);
 };
 
-export default CreateCourses;
+export default EditCourses;

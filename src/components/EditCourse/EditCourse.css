@@ -1,0 +1,10 @@
+.duration-edit{
+    border: none;
+    opacity: 0.7;
+    box-shadow: 0.3vw 0.3vw 0.1vw rgba(0, 0, 0, 0.2);
+    font-size: clamp(15px,1.2vw,20px);
+    border-radius: 0.5vw;
+    min-height: 30px;
+    max-height: 30px;
+    resize: none;
+}

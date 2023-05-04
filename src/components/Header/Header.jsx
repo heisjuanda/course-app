@@ -1,47 +1,40 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
+//components
 import Logo from './components/Logo/Logo';
 import Boton from '../../common/Button/Button';
 
-import { deleteTokenById, getUserByID } from '../../LocalStorage/localStorage';
+//local storage
+import { deleteUser } from '../../LocalStorage/localStorage';
 
+//constants and helpers
 import { setCondition } from '../../constants';
 
+//store
 import store from '../../store/services';
-//courses
-import * as courseCreator from '../../store/courses/actionCreators';
-//authors
-import * as authorCreator from '../../store/authors/actionCreators';
-//users
-import * as userCreator from '../../store/user/actionCreators';
+//thunks
+import { logOut } from '../../store/user/thunk';
 
 //styles
 import styles from './Header.css';
 
 const Header = ({ show }) => {
-	const Dispatch = useDispatch();
-	const removeStoreItems = () => {
-		store.dispatch(courseCreator.deleteAll());
-		store.dispatch(authorCreator.deleteAll());
-		store.dispatch(userCreator.logoutSuccess());
-		/*Dispatch(courseCreator.deleteAll());
-		Dispatch(authorCreator.deleteAll());
-		Dispatch(userCreator.logoutSuccess());*/
-		console.log('deleting store');
-		console.log(store.getState());
-	};
 	const history = useNavigate();
 	const [text, addText] = useState('');
+
+	//add the name's user'
 	useEffect(() => {
 		addText(store.getState().user.name);
 	}, []);
-	/*
-		{getUserByID(1, (result) => {
-		addText(result.name);
-		})}
-	*/
+
+	const logout = async () => {
+		await logOut();
+		deleteUser();
+		setCondition(false);
+		history('/');
+	};
+
 	return (
 		<header className='header-section'>
 			<div className='header-section__logo'>
@@ -57,10 +50,7 @@ const Header = ({ show }) => {
 							text={'Logout'}
 							onClick={(e) => {
 								e.preventDefault();
-								removeStoreItems();
-								deleteTokenById(1);
-								setCondition(false);
-								history('/');
+								logout();
 							}}
 						/>
 					</div>

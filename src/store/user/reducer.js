@@ -5,6 +5,7 @@ const initialState = {
 	name: '',
 	email: '',
 	token: '',
+	role: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,6 +17,7 @@ const reducer = (state = initialState, action) => {
 				name: action.user.name,
 				email: action.user.email,
 				token: action.user.token,
+				role: action.user.role,
 			};
 		case actionTypes.LOGOUT_SUCCESS:
 			return {
@@ -24,6 +26,7 @@ const reducer = (state = initialState, action) => {
 				name: '',
 				email: '',
 				token: '',
+				role: '',
 			};
 		default:
 			return state;

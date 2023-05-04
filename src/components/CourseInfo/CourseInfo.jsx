@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 
+//components
 import Boton from '../../common/Button/Button';
 
 //styles
@@ -7,10 +8,11 @@ import styles from './CourseInfo.css';
 
 const CourseInfo = () => {
 	const course = useParams();
+
 	return (
 		<div className='course-info--container'>
 			<div className='container__leave'>
-				<Boton text={'< Back to course'} linkTo={'/Courses'} />
+				<Boton text={'< Back to course'} linkTo={'/courses'} />
 			</div>
 			<div>
 				<h1>{course.title}</h1>

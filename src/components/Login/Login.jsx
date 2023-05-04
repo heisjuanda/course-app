@@ -1,21 +1,34 @@
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 
+//components
 import Input from '../../common/Input/Input';
 import Boton from '../../common/Button/Button';
 import Paragraph from '../../common/Paragraph/Paragraph';
 
-import { addToken } from '../../LocalStorage/localStorage';
+//local storage
+import { addUser } from '../../LocalStorage/localStorage';
 
+//store
 import store from '../../store/services';
 //user
 import * as userCreator from '../../store/user/actionCreators';
+//store apis
+import { getUser, logIn } from '../../store/user/thunk';
+
 //styles
 import styles from './Login.css';
 
 const Login = () => {
-	const Dispatch = useDispatch();
 	const history = useNavigate();
+
+	const handleErrors = (result) => {
+		if (result.errors) {
+			alert('The email is invalid');
+		} else {
+			alert('Wrong password or email');
+		}
+	};
+
 	async function handleLogin() {
 		const name = '';
 		const password = document.getElementById('password').value;
@@ -25,31 +38,36 @@ const Login = () => {
 			email: email,
 			password: password,
 		};
-		const response = await fetch('http://localhost:4000/login', {
-			method: 'POST',
-			body: JSON.stringify(newUser),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-		const result = await response.json();
-		if (!result.successful) {
-			alert(result.result);
-			return false;
-		} else {
+		const result = await logIn(newUser);
+		if (result.successful) {
 			alert(`Welcome ${result.user.name}!!`);
-			addToken(result.result, result.user.name);
-			const user = {
-				isAuth: true,
-				name: result.user.name,
-				email: result.user.email,
-				token: result.result,
-			};
-			store.dispatch(userCreator.loginSuccess(user));
-			//Dispatch(userCreator.loginSuccess(user));
+			addUser(result.result, result.user.name);
+			const currentUser = await getUser(result.result);
+			if (currentUser.result.role === 'admin') {
+				const user = {
+					isAuth: true,
+					name: result.user.name,
+					email: result.user.email,
+					token: result.result,
+					role: currentUser.result.role,
+				};
+				store.dispatch(userCreator.loginSuccess(user));
+			} else {
+				const user = {
+					isAuth: true,
+					name: result.user.name,
+					email: result.user.email,
+					token: result.result,
+					role: '',
+				};
+				store.dispatch(userCreator.loginSuccess(user));
+			}
 			return true;
+		} else {
+			handleErrors(result);
 		}
 	}
+
 	return (
 		<div className='logIn-container'>
 			<form className='logIn-container__form'>
@@ -58,11 +76,21 @@ const Login = () => {
 				</div>
 				<div>
 					<label htmlFor='email'>Email</label> <br />
-					<Input typ={'email'} i={'email'} placeHold={'Enter email'} />
+					<Input
+						type={'email'}
+						id={'email'}
+						placeHold={'Enter email'}
+						required={true}
+					/>
 				</div>
 				<div>
 					<label htmlFor='passwork'>Password</label> <br />
-					<Input typ={'password'} i={'password'} placeHold={'Enter name'} />
+					<Input
+						type={'password'}
+						id={'password'}
+						placeHold={'Enter name'}
+						required={true}
+					/>
 				</div>
 				<Boton
 					text={'Login'}

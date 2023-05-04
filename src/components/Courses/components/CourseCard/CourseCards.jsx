@@ -6,18 +6,23 @@ import getHours from '../../../../helper/getHours';
 const CourseCards = ({ courses, update, cursos }) => {
 	return (
 		<>
-			{courses.map((co) => {
-				if (co) {
-					let autor = getAuthors(co.title).join(', ');
+			{courses.map((course) => {
+				if (course) {
+					let autor = getAuthors(course.title).join(', ');
+					let authorID = course.authors;
+					let creationDate = course.creationDate.includes('.')
+						? course.creationDate
+						: course.creationDate.split('/').join('.');
 					return (
 						<CourseCard
-							key={co.id}
-							id={co.id}
-							name={co.title}
-							description={co.description}
+							key={course.id}
+							id={course.id}
+							name={course.title}
+							description={course.description}
 							authors={autor}
-							duration={getHours(co)}
-							created={co.creationDate.split('/').join('.')}
+							authorsID={authorID}
+							duration={getHours(course)}
+							created={creationDate}
 							text={'View Course'}
 							update={update}
 							cursos={cursos}

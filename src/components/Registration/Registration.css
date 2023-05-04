@@ -23,6 +23,7 @@ label{
     font-size: clamp(15px,1.3vw,25px);
     box-shadow: 0.3vw 0.3vw 0.1vw rgba(0, 0, 0, 0.13);
     color: lightskyblue;
+    cursor: pointer;
 }
 .registration-container__form button:active{
     transform: translate(0.2vw,0.2vw);

@@ -23,5 +23,5 @@ export const getCourses = (courses) => ({
 });
 
 export function deleteAll() {
-	return { type: 'DELETE_ALL' };
+	return { type: actionTypes.DELETE_ALL };
 }

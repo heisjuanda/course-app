@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import setHours from '../../helper/pipeDuration';
+import { setHours } from '../../helper/pipeDuration';
 
 const Paragraph = ({ text, id, textb, route, url }) => {
 	return route ? (
