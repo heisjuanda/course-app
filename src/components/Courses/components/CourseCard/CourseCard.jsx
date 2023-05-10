@@ -2,7 +2,7 @@
 import Boton from '../../../../common/Button/Button';
 
 //store
-import store from '../../../../store/services';
+import { useSelector } from 'react-redux';
 //thunks
 import { deleteCourses } from '../../../../store/courses/thunk';
 
@@ -27,6 +27,7 @@ const CourseCard = ({
 	update,
 	cursos,
 }) => {
+	const role = useSelector((state) => state.user.role);
 	const handleDeleteCourse = () => {
 		deleteCourses(id);
 		deleteMockedCourseList(id);
@@ -35,7 +36,7 @@ const CourseCard = ({
 		update((v) => v - 1);
 	};
 	return (
-		<div className='course-card--container'>
+		<div className='course-card--container' data-testid='course-cards'>
 			<div className='course-card--container__about-course'>
 				<h1>{name}</h1>
 				<p>{description}</p>
@@ -47,7 +48,7 @@ const CourseCard = ({
 				</div>
 				<div>
 					<h2>Duration:</h2>
-					<p>{duration} horas</p>
+					<p>{duration} hours</p>
 				</div>
 				<div>
 					<h2>Created:</h2>
@@ -60,7 +61,7 @@ const CourseCard = ({
 							linkTo={`/courses/info/${name}/${id}/${description}/${created}/${authors}/${duration}`}
 						/>
 					</div>
-					{store.getState().user.role === 'admin' ? (
+					{role === 'admin' ? (
 						<div>
 							<Boton
 								text={'🖊'}

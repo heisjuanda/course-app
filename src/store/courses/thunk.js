@@ -5,21 +5,22 @@ import { setFrom, setFromEdit } from '../../constants';
 import store from '../services';
 import * as actionCreator from './actionCreators';
 
+import { getToken } from '../../LocalStorage/localStorage';
+
 export const updateCourseID = async (id, info) => {
 	const response = await fetch(`http://localhost:4000/courses/${id}`, {
 		method: 'PUT',
 		body: JSON.stringify(info),
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `${store.getState().user.token}`,
+			Authorization: `${getToken()}`,
 		},
 	});
 	const result = await response.json();
 	if (result.successful) {
-		store.dispatch(actionCreator.updateCourse(result.result));
 		setFromEdit(true);
 	}
-	return result.result;
+	return result;
 };
 
 export async function getCourses() {
@@ -30,8 +31,7 @@ export async function getCourses() {
 		},
 	});
 	const result = await response.json();
-	store.dispatch(actionCreator.getCourses(result.result));
-	return result.result;
+	return result;
 }
 
 export const saveCourses = async (newCourse) => {
@@ -40,14 +40,14 @@ export const saveCourses = async (newCourse) => {
 		body: JSON.stringify(newCourse),
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `${store.getState().user.token}`,
+			Authorization: `${getToken()}`,
 		},
 	});
 	const result = await response.json();
 	if (result.successful) {
-		store.dispatch(actionCreator.saveCourse([result.result]));
 		setFrom(true);
 	}
+	return result;
 };
 
 export const deleteCourses = async (id) => {
@@ -55,7 +55,7 @@ export const deleteCourses = async (id) => {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `${store.getState().user.token}`,
+			Authorization: `${getToken()}`,
 		},
 	});
 	const result = await response.json();

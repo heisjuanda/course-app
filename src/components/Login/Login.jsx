@@ -9,7 +9,7 @@ import Paragraph from '../../common/Paragraph/Paragraph';
 import { addUser } from '../../LocalStorage/localStorage';
 
 //store
-import store from '../../store/services';
+import { useDispatch } from 'react-redux';
 //user
 import * as userCreator from '../../store/user/actionCreators';
 //store apis
@@ -20,6 +20,7 @@ import styles from './Login.css';
 
 const Login = () => {
 	const history = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleErrors = (result) => {
 		if (result.errors) {
@@ -51,7 +52,7 @@ const Login = () => {
 					token: result.result,
 					role: currentUser.result.role,
 				};
-				store.dispatch(userCreator.loginSuccess(user));
+				dispatch(userCreator.loginSuccess(user));
 			} else {
 				const user = {
 					isAuth: true,
@@ -60,7 +61,7 @@ const Login = () => {
 					token: result.result,
 					role: '',
 				};
-				store.dispatch(userCreator.loginSuccess(user));
+				dispatch(userCreator.loginSuccess(user));
 			}
 			return true;
 		} else {

@@ -5,13 +5,15 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "history": "^5.3.0",
+    "jest": "^27.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
+    "react-test-renderer": "^18.2.0-next-99eef9e2d-20220503",
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-immutable-state-invariant": "^2.1.0",
@@ -26,7 +28,7 @@
     "eject": "react-scripts eject",
     "test:nowatch": "react-scripts test --watchAll=false",
     "prepare": "husky install",
-    "prepublish": "npm run eslint:fix",
+    "prepublish": "npm run eslint:fix && npm run test:nowatch",
     "eslint": "eslint --ext .js --ext .jsx src",
     "eslint:fix": "eslint --fix --ext .js --ext .jsx src"
   },
@@ -49,6 +51,8 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react": "^14.0.0",
+    "chai": "^4.3.7",
     "eslint": "^8.38.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.8.0",

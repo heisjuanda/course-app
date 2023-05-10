@@ -4,17 +4,20 @@ import store from '../services';
 import * as authorCreator from '../authors/actionCreators';
 import * as courseCreator from '../courses/actionCreators';
 
+import { getToken } from '../../LocalStorage/localStorage';
+
 export const logOut = async () => {
 	const response = await fetch('http://localhost:4000/logout', {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `${store.getState().user.token}`,
+			Authorization: `${getToken()}`,
 		},
 	});
 	store.dispatch(actionCreator.logoutSuccess());
 	store.dispatch(authorCreator.deleteAll());
 	store.dispatch(courseCreator.deleteAll());
+	return response;
 };
 
 export const getUser = async (Authorization) => {

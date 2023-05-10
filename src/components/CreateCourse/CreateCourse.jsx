@@ -12,10 +12,16 @@ import { mockedAuthorsList, setFrom } from '../../constants';
 import { saveCourses } from '../../store/courses/thunk';
 import { addAuthor } from '../../store/authors/thunk';
 
+//store
+import * as courseCreator from '../../store/courses/actionCreators';
+import * as authorsCreator from '../../store/authors/actionCreators';
+import { useDispatch } from 'react-redux';
+
 //styles
 import styles from './CreateCourses.css';
 
 const CreateCourse = () => {
+	const dispatch = useDispatch();
 	//Course object
 	const [newCourse] = useState({});
 	const [duration, setDuration] = useState(0);
@@ -80,9 +86,10 @@ const CreateCourse = () => {
 
 	const addNewAutor = async (author) => {
 		let newAuthor = await addAuthor(authorCreator(author));
-		if (newAuthor) {
-			setAddNewAuthors([...addNewAuthors, newAuthor]);
-			currentAuthor.push(newAuthor);
+		if (newAuthor.successful) {
+			dispatch(authorsCreator.saveAuthor([newAuthor.result]));
+			setAddNewAuthors([...addNewAuthors, newAuthor.result]);
+			currentAuthor.push(newAuthor.result);
 		}
 	};
 
@@ -112,7 +119,10 @@ const CreateCourse = () => {
 		newCourse.description = newDescription;
 		newCourse.duration = duration;
 		newCourse.title = newTitle;
-		await saveCourses(newCourse);
+		const response = await saveCourses(newCourse);
+		if (response.successful) {
+			dispatch(courseCreator.saveCourse([response.result]));
+		}
 	};
 
 	return (
@@ -203,9 +213,9 @@ const CreateCourse = () => {
 					</div>
 					<div>
 						<h2>Authors</h2>
-						{courseAuthors.map((author) => {
+						{courseAuthors.map((author, key) => {
 							return (
-								<div className='author-list'>
+								<div className='author-list' key={key}>
 									<h3>{author.name}</h3>
 									<div className='boton-author__add'>
 										<Boton
@@ -242,7 +252,7 @@ const CreateCourse = () => {
 						{currentAuthor.map((author) => {
 							if (author) {
 								return (
-									<div className='author-list'>
+									<div className='author-list' key={author.id}>
 										<h3>{author.name}</h3>
 										<div className='boton-author__add'>
 											<Boton

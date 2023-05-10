@@ -1,6 +1,4 @@
-//store
-import * as actionCreator from './actionCreators';
-import store from '../services';
+import { getToken } from '../../LocalStorage/localStorage';
 
 export const addAuthor = async (author) => {
 	const response = await fetch('http://localhost:4000/authors/add', {
@@ -8,14 +6,11 @@ export const addAuthor = async (author) => {
 		body: JSON.stringify(author),
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `${store.getState().user.token}`,
+			Authorization: `${getToken()}`,
 		},
 	});
 	const result = await response.json();
-	if (result.successful) {
-		store.dispatch(actionCreator.saveAuthor([result.result]));
-		return result.result;
-	}
+	return result;
 };
 
 export async function getAuthors() {
@@ -26,6 +21,5 @@ export async function getAuthors() {
 		},
 	});
 	const result = await response.json();
-	store.dispatch(actionCreator.getAuthors(result.result));
 	return result.result;
 }

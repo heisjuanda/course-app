@@ -12,20 +12,28 @@ import { deleteUser } from '../../LocalStorage/localStorage';
 import { setCondition } from '../../constants';
 
 //store
-import store from '../../store/services';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
+//actions
+import * as userCreator from '../../store/user/actionCreators';
+import * as authorCreator from '../../store/authors/actionCreators';
+import * as courseCreator from '../../store/courses/actionCreators';
+
 //thunks
 import { logOut } from '../../store/user/thunk';
 
 //styles
 import styles from './Header.css';
+import store from '../../store/services';
 
 const Header = ({ show }) => {
 	const history = useNavigate();
 	const [text, addText] = useState('');
-
-	//add the name's user'
+	let name = useSelector((state) => state.user.name);
+	//add the user's name
 	useEffect(() => {
-		addText(store.getState().user.name);
+		addText(name);
 	}, []);
 
 	const logout = async () => {

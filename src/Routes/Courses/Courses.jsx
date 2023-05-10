@@ -23,13 +23,22 @@ import {
 import searchCourse from '../../helper/searchCourse';
 
 //store
-import store from '../../store/services';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import * as courseCreator from '../../store/courses/actionCreators';
+import * as authorCreator from '../../store/authors/actionCreators';
+
 //store apis
 import { getAuthors } from '../../store/authors/thunk';
 import { getCourses } from '../../store/courses/thunk';
-import { useSelector } from 'react-redux';
 
 const Courses = () => {
+	const _courses = useSelector((state) => state.courses);
+	const _authors = useSelector((state) => state.authors);
+	const _user = useSelector((state) => state.user.isAuth);
+
+	const dispatch = useDispatch();
+
 	const [addCour, isAddingCourse] = useState(addingCourse);
 
 	const handleAddingCourse = () => {
@@ -39,18 +48,16 @@ const Courses = () => {
 	const [courses, setCourses] = useState(mockedCoursesList);
 
 	const handleUpdateCreation = () => {
-		saveMockedCoursesList(store.getState().courses);
-		UpdateMockedAuthorsList(store.getState().authors);
-		setCourses(store.getState().courses);
+		saveMockedCoursesList(_courses);
+		UpdateMockedAuthorsList(_authors);
+		setCourses(_courses);
 	};
 
 	const handleUpdateEdit = () => {
-		updateMockedCoursesList(store.getState().courses);
-		UpdateMockedAuthorsList(store.getState().authors);
-		setCourses(store.getState().courses);
+		updateMockedCoursesList(_courses);
+		UpdateMockedAuthorsList(_authors);
+		setCourses(_courses);
 	};
-
-	const _courses = useSelector((state) => state.courses);
 
 	//gets courses and authors from apis and updates the store
 	useEffect(() => {
@@ -66,9 +73,13 @@ const Courses = () => {
 		async function fetchCourses() {
 			const resultCourses = await getCourses();
 			const resultAuthors = await getAuthors();
-			saveMockedCoursesList(resultCourses);
-			UpdateMockedAuthorsList(resultAuthors);
-			setCourses(mockedCoursesList);
+			if (resultCourses.successful) {
+				dispatch(courseCreator.getCourses(resultCourses.result));
+				dispatch(authorCreator.getAuthors(resultAuthors));
+				saveMockedCoursesList(resultCourses.result);
+				UpdateMockedAuthorsList(resultAuthors);
+				setCourses(mockedCoursesList);
+			}
 		}
 		if (CONDITION === condition) {
 			fetchCourses();
@@ -85,7 +96,7 @@ const Courses = () => {
 
 	return (
 		<>
-			{store.getState().user.isAuth ? (
+			{_user ? (
 				<>
 					<Header show={true} />
 					<SearchBar

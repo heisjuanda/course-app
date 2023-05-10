@@ -10,7 +10,7 @@ import AuthorReducer from './authors/reducer';
 import CourseReducer from './courses/reducer';
 import UserReducer from './user/reducer';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
 	user: UserReducer,
 	courses: CourseReducer,
 	authors: AuthorReducer,

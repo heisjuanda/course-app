@@ -7,11 +7,13 @@ import { addingCourse, setAddingCourse } from '../../../../constants';
 
 //store
 import store from '../../../../store/services';
+import { useSelector } from 'react-redux';
 
 //styles
 import styles from './SearchBar.css';
 
 const SearchBar = ({ searcher, idBton, createCourse }) => {
+	const role = useSelector((state) => state.user.role);
 	return (
 		<div className='search-container'>
 			<label htmlFor='search'></label>
@@ -32,7 +34,7 @@ const SearchBar = ({ searcher, idBton, createCourse }) => {
 					searcher(document.getElementById('search').value);
 				}}
 			/>
-			{store.getState().user.role === 'admin' ? (
+			{role === 'admin' ? (
 				<Boton
 					text={'Add course'}
 					key={'addCourse'}
